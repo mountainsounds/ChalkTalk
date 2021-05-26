@@ -6,7 +6,9 @@ const server = app.listen(port, () => {
   console.log(`The server is up and running at https://localhost:${port}`)
 });
 
+app.set('view engine', 'pug');
+app.set('views', 'views');
 
-app.get('/', (req, res) => {
-  res.send('<h1>Hello World!</h1>');
+app.get('/', (req, res, next) => {
+  res.status(200).render('home');
 });

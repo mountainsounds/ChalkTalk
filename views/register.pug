@@ -3,13 +3,35 @@ extends layouts/login-layout.pug
 block content
   .loginContainer
     h1 Register
-    form(action="" method="post")
+    form#registerForm(action="" method="post" onsubmit='event.preventDefault(); validateForm();')
       input(type="text", name="firstName", placeholder="First Name", required="")
       input(type="text", name="lastName", placeholder="Last Name", required="")
       input(type="text", name="username", placeholder="Username", required="")
       input(type="email", name="email", placeholder="Email", required="")
-      input(type="password", name="password", placeholder="Password", required="")
-      input(type="password", name="passwordConf", placeholder="Confirm password", required="")
+      input#password(type="password", name="password", placeholder="Password", required="")
+      input#passwordConf(type="password", name="passwordConf", placeholder="Confirm password", required="")
       input(type="submit", value="Register")
 
     a(href="/login") Already have an account? Login here.
+
+    .alert.alert-danger.alert-dismissable
+      Please check to make sure your passwords match!
+
+    script.
+      let passField = document.getElementById('password');
+      let passConfField = document.getElementById('passwordConf');
+      let form = document.getElementById('registerForm');
+
+      function validateForm() {
+        if (passField.value !== passConfField.value) {
+          $('.alert').show();
+          $("body").click(function(){
+            $(".alert").alert("close");
+           });
+        } else {
+          console.log("submit!s")
+          form.submit();
+        }
+      }
+
+

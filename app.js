@@ -1,23 +1,27 @@
 const express = require('express');
 const app = express();
-const port = 3000
-const middleware = require('./middleware');
+const port = 3000;
+const middleware = require('./middleware')
+const path = require('path')
 
-const server = app.listen(port, () => {
-  console.log(`The server is up and running at https://localhost:${port}`)
-});
+const server = app.listen(port, () => console.log("Server listening on port " + port));
 
-app.set('view engine', 'pug');
-app.set('views', 'views');
+app.set("view engine", "pug");
+app.set("views", "views");
+
+app.use(express.static(path.join(__dirname, "public")));
 
 // Routes
 const loginRoute = require('./routes/loginRoutes');
 
-app.use('/login', loginRoute);
+app.use("/login", loginRoute);
 
-app.get('/', middleware.requireLogin, (req, res, next) => {
-  let payload = {
-    pageTitle: 'Home',
-  }
-  res.status(200).render('home', payload);
-});
+
+app.get("/", middleware.requireLogin, (req, res, next) => {
+
+    var payload = {
+        pageTitle: "Home"
+    }
+
+    res.status(200).render("home", payload);
+})

@@ -9,20 +9,20 @@ const UserSchema = new Schema({
     trim: true
   },
 
-  lastName {
+  lastName: {
     type: String,
     required: true,
     trim: true
   },
 
-  username {
+  username: {
     type: String,
     required: true,
     trim: true,
     unique: true
   },
 
-  email {
+  email: {
     type: String,
     required: true,
     trim: true,

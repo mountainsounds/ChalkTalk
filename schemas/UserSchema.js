@@ -39,6 +39,10 @@ const UserSchema = new Schema({
     default: "/images/profilePic.png"
   },
 
+// Set Options
+}, {
+  // Give timestamp to each insertion
+  timestamps: true
 });
 
 let User = mongoose.model('User', UserSchema);

@@ -14,7 +14,6 @@ $('#postTextarea').keyup(e => {
 });
 
 $("#submitPostButton").click(e => {
-  console.log("Is this clicked!?")
   let btn = $(e.target);
   let textbox = $("#postTextarea");
 
@@ -23,6 +22,6 @@ $("#submitPostButton").click(e => {
   }
 
   $.post("/api/posts", data, (postData, status, xhr) => {
-    alert(postData);
+    console.log('data: ', postData);
   })
 });

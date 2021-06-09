@@ -8,7 +8,9 @@ const PostSchema = new Schema({
   postedBy: { type: Schema.Types.ObjectId, ref: 'User'},
   pinned: Boolean,
   // Keep track of all of the users who have liked a post
-  likes: [{ type: Schema.Types.ObjectId, ref: 'User'}]
+  likes: [{ type: Schema.Types.ObjectId, ref: 'User'}],
+  retweetUsers: [{ type: Schema.Types.ObjectId, ref: 'User'}],
+  retweetData: { type: Schema.Types.ObjectId, ref: 'Post'},
 // Set Options
 }, {
   // Give timestamp to each insertion

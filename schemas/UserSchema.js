@@ -11,6 +11,7 @@ const UserSchema = new Schema({
   profilePic: { type: String, default: "/images/profilePic.png" },
   // Keep track of posts the user has liked
   likes: [{ type: Schema.Types.ObjectId, ref: 'Post'}],
+  retweets: [{ type: Schema.Types.ObjectId, ref: 'Post'}],
 // Set Options
 }, {
   // Give timestamp to each insertion

@@ -6,6 +6,7 @@
   --greyText: rgb(101, 119, 134);
   --greyButtonText: rgba(0,0,0,0.34);
   --spacing: 15px;
+  --red: rgb(226, 34, 94);
 }
 
 a {
@@ -56,6 +57,11 @@ button {
   background-color: transparent;
   border: none;
   color: var(--greyButtonText);
+}
+
+/* This fixes a bug and allows the like count to rerender dynamiclaly */
+button i, button span {
+  pointer-events: none;
 }
 
 .mainSectionContainer {
@@ -189,3 +195,6 @@ button {
   border-radius: 50%;
 }
 
+.postButtonContainer.red button.active {
+  color: var(--red);
+}

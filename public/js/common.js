@@ -29,9 +29,43 @@ $("#submitPostButton").click(e => {
   })
 });
 
-function createPostHtml({postedBy, content, createdAt, ...rest}) {
-  console.log('postedBy: ', postedBy);
-  if (postedBy === undefined || postedBy._id === undefined) {
+$(document).on('click', '.likeButton', (event) => {
+  let button = $(event.target);
+  let postId = getPostIdFromElement(button);
+
+  if (postId === undefined) return;
+
+  $.ajax({
+    url: `/api/posts/${postId}/like`,
+    type: "PUT",
+    success: (postData) => {
+      console.log(postData.likes.length);
+      // Update number without page refresh
+      button.find("span").text(postData.likes.length || "");
+
+      if (postData.likes.includes(userLoggedIn._id)) {
+        button.addClass("active");
+      } else {
+        button.removeClass("active");
+      }
+
+    }
+  })
+
+});
+
+function getPostIdFromElement(element) {
+  let isRoot = element.hasClass('post');
+  let rootElement = isRoot ? element : element.closest('.post');
+  let postId = rootElement.data().id;
+
+  if (postId === undefined) return alert('Post id undefined');
+
+  return postId;
+}
+
+function createPostHtml({postedBy, content, createdAt, _id, ...rest}) {
+  if (postedBy._id === undefined) {
     return console.log("user object not populated");
   }
 
@@ -40,8 +74,10 @@ function createPostHtml({postedBy, content, createdAt, ...rest}) {
   let displayName = firstName + ' ' + lastName;
   let timestamp = timeDifference(new Date(), new Date(createdAt));
 
+  // Show correct like color on page load
+  let likeButtonActiveClass = rest.likes.includes(userLoggedIn._id) ? 'active' : '';
 
-  return `<div class='post>
+  return `<div class='post' data-id='${_id}'>
     <div class='mainContentContainer>
       <div class='userImageContainer'>
         <img src='${profilePic}'>
@@ -60,11 +96,16 @@ function createPostHtml({postedBy, content, createdAt, ...rest}) {
           <div class='postButtonContainer'>
             <button><i class='far fa-comment'></i></button>
           </div>
-          <div class='postButtonContainer'>
-            <button><i class='fas fa-retweet'></i></button>
+          <div class='postButtonContainer green'>
+            <button class='retweet'>
+              <i class='fas fa-retweet'></i>
+            </button>
           </div>
-          <div class='postButtonContainer'>
-            <button><i class='far fa-heart'></i></button>
+          <div class='postButtonContainer red'>
+            <button class='likeButton ${likeButtonActiveClass}'>
+              <i class='far fa-heart'></i>
+              <span>${rest.likes.length || ''} </span>
+            </button>
           </div>
         </div>
 

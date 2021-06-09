@@ -6,7 +6,9 @@ const PostSchema = new Schema({
   // Don't require the content to be true, to handle retweeting posts later on.
   content: { type: String, trim: true},
   postedBy: { type: Schema.Types.ObjectId, ref: 'User'},
-  pinned: Boolean
+  pinned: Boolean,
+  // Keep track of all of the users who have liked a post
+  likes: [{ type: Schema.Types.ObjectId, ref: 'User'}]
 // Set Options
 }, {
   // Give timestamp to each insertion

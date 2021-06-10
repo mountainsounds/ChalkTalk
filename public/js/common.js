@@ -1,7 +1,9 @@
-$('#postTextarea').keyup(e => {
+$('#postTextarea, #replyTextarea').keyup(e => {
   let textbox = $(e.target);
   let value = textbox.val().trim();
-  let submitBtn = $("#submitPostButton");
+
+  let isModal = textbox.parents(".modal").length === 1;
+  let submitBtn = isModal ? $("#submitReplyButton") : $("#submitPostButton");
 
   if (submitBtn.length === 0) return;
 
@@ -13,21 +15,50 @@ $('#postTextarea').keyup(e => {
   submitBtn.prop("disabled", false);
 });
 
-$("#submitPostButton").click(e => {
-  let btn = $(e.target);
-  let textbox = $("#postTextarea");
+$("#submitPostButton, #submitReplyButton").click(e => {
+  let button = $(e.target);
+  let isModal = button.parents(".modal").length === 1;
+  let textbox = isModal ? $("#replyTextarea") : $("#postTextarea");
 
   let data = {
     content: textbox.val(),
   }
 
+  if (isModal) {
+    let id = button.data().id;
+    if (id === null) return alert("Button id is null");
+    data.replyTo = id;
+  }
+
   $.post("/api/posts", data, postData => {
-    let html = createPostHtml(postData);
-    $(".postsContainer").prepend(html);
-    textbox.val("");
-    btn.prop("disabled", true)
-  })
+      console.log('postData: ', postData)
+    if (postData.replyTo) {
+      // Refresh the page after replying to a post
+      console.log('in hre?')
+      location.reload();
+    } else {
+      console.log('or here?')
+      // Dynamically add post
+      let html = createPostHtml(postData);
+      $(".postsContainer").prepend(html);
+      textbox.val("");
+      button.prop("disabled", true)
+    }
+  });
 });
+
+$("#replyModal").on("show.bs.modal", (event) => {
+  let button = $(event.relatedTarget);
+  let postId = getPostIdFromElement(button);
+
+  $("#submitReplyButton").data('id', postId);
+
+  $.get("/api/posts/" + postId, results => {
+    outputPosts(results, $("#originalPostContainer"));
+  });
+});
+
+$("#replyModal").on("hidden.bs.modal", () => $("#originalPostContainer").html(""));
 
 $(document).on('click', '.likeButton', (event) => {
   let button = $(event.target);
@@ -53,7 +84,6 @@ $(document).on('click', '.likeButton', (event) => {
   })
 
 });
-
 
 $(document).on('click', '.retweetButton', (event) => {
   let button = $(event.target);
@@ -119,6 +149,23 @@ function createPostHtml(postData) {
     </span>`
   }
 
+  let replyFlag = '';
+
+  if (postData.replyTo) {
+    if (!postData.replyTo._id) {
+      return alert("Reply to is not populated");
+    } else if (!postData.replyTo.postedBy._id) {
+      return alert("Posted by is not populated");
+    }
+
+    let replyToUsername = postData.replyTo.postedBy.username;
+    replyFlag = `<div class='replyFlag'>
+                    Replying to <a href='/profile/${replyToUsername}' href=''>@${replyToUsername}</a>
+                 </div>`
+  }
+
+
+
   return `<div class='post' data-id='${_id}'>
     <div class='postActionContainer'>
       ${retweetText}
@@ -133,13 +180,16 @@ function createPostHtml(postData) {
           <span class='username'>@${username}</span>
           <span class='date'>${timestamp}</span>
         </div>
+        ${replyFlag}
         <div class='postBody'>
           <span>${content}</span>
         </div>
 
         <div class='postFooter'>
           <div class='postButtonContainer'>
-            <button><i class='far fa-comment'></i></button>
+            <button data-toggle='modal' data-target='#replyModal'>
+              <i class='far fa-comment'></i>
+            </button>
           </div>
           <div class='postButtonContainer green'>
             <button class='retweetButton ${retweetButtonActiveClass}'>
@@ -193,4 +243,19 @@ function timeDifference(current, previous) {
 
   return Math.round(elapsed/msPerYear ) + ' years ago';
 
+}
+
+function outputPosts(results, container) {
+  container.html("");
+
+    if (!Array.isArray(results)) results = [results];
+
+  results.forEach(result => {
+    let html = createPostHtml(result);
+    container.append(html);
+  });
+
+  if (results.length === 0) {
+    container.append("<span class='noResults'>Nothing to show.</span>")
+  }
 }

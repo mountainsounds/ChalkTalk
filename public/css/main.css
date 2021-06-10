@@ -222,3 +222,21 @@ button i, button span {
   color: var(--greyText);
   margin-bottom: var(--spacing);
 }
+
+.modal .postFormContainer {
+  border: none;
+  padding: 0;
+  padding-top: var(--spacing);
+}
+
+.modal .post {
+  padding-top: 0 0 var(--spacing) 0;
+}
+
+.replyFlag {
+  margin-bottom: 5px;
+}
+
+.replyFlag a {
+  color: var(--blue);
+}

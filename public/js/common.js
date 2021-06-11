@@ -50,7 +50,6 @@ $("#submitPostButton, #submitReplyButton").click(e => {
 $("#replyModal").on("show.bs.modal", (event) => {
   let button = $(event.relatedTarget);
   let postId = getPostIdFromElement(button);
-
   $("#submitReplyButton").data('id', postId);
 
   $.get("/api/posts/" + postId, results => {
@@ -59,6 +58,31 @@ $("#replyModal").on("show.bs.modal", (event) => {
 });
 
 $("#replyModal").on("hidden.bs.modal", () => $("#originalPostContainer").html(""));
+
+$("#deletePostModal").on("show.bs.modal", (event) => {
+  let button = $(event.relatedTarget);
+  let postId = getPostIdFromElement(button);
+  $("#deletePostButton").data('id', postId);
+});
+
+$("#deletePostButton").click(() => {
+  let postId = $(event.target).data("id");
+
+  $.ajax({
+    url: `/api/posts/${postId}`,
+    type: "DELETE",
+    success: (data, status, xhr) => {
+
+      if (xhr.status !== 202) {
+        alert("could not delete post");
+        return;
+      }
+
+      location.reload();
+    }
+  })
+
+})
 
 $(document).on('click', '.likeButton', (event) => {
   let button = $(event.target);
@@ -70,7 +94,6 @@ $(document).on('click', '.likeButton', (event) => {
     url: `/api/posts/${postId}/like`,
     type: "PUT",
     success: (postData) => {
-      console.log(postData.likes.length);
       // Update number without page refresh
       button.find("span").text(postData.likes.length || "");
 

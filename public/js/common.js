@@ -54,7 +54,7 @@ $("#replyModal").on("show.bs.modal", (event) => {
   $("#submitReplyButton").data('id', postId);
 
   $.get("/api/posts/" + postId, results => {
-    outputPosts(results, $("#originalPostContainer"));
+    outputPosts(results.postData, $("#originalPostContainer"));
   });
 });
 
@@ -108,6 +108,15 @@ $(document).on('click', '.retweetButton', (event) => {
   })
 });
 
+$(document).on('click', '.post', event => {
+  let element = $(event.target);
+  let postId = getPostIdFromElement(element)
+
+  if (postId !== undefined && !element.is("button")) {
+    window.location.href = '/posts/' + postId;
+  }
+})
+
 function getPostIdFromElement(element) {
   let isRoot = element.hasClass('post');
   let rootElement = isRoot ? element : element.closest('.post');
@@ -118,7 +127,8 @@ function getPostIdFromElement(element) {
   return postId;
 }
 
-function createPostHtml(postData) {
+// LargeFont is a reference to whether this is the main post or not
+function createPostHtml(postData, largeFont = false) {
   if (postData === null) return alert("post object is null");
 
   let isRetweet = postData.retweetData !== undefined;
@@ -140,6 +150,7 @@ function createPostHtml(postData) {
   // Show correct like color on page load
   let likeButtonActiveClass = rest.likes.includes(userLoggedIn._id) ? 'active' : '';
   let retweetButtonActiveClass = rest.retweetUsers.includes(userLoggedIn._id) ? 'active' : '';
+  let largeFontClass = largeFont ? "largeFont" : "";
 
   let retweetText = '';
   if (isRetweet) {
@@ -151,7 +162,7 @@ function createPostHtml(postData) {
 
   let replyFlag = '';
 
-  if (postData.replyTo) {
+  if (postData.replyTo && postData.replyTo._id) {
     if (!postData.replyTo._id) {
       return alert("Reply to is not populated");
     } else if (!postData.replyTo.postedBy._id) {
@@ -164,9 +175,14 @@ function createPostHtml(postData) {
                  </div>`
   }
 
+  let buttons = "";
+  if (postData.postedBy._id === userLoggedIn._id) {
+    buttons = `<button data-id="${postData._id}" data-toggle="modal" data-target="#deletePostModal"><i class="fas fa-times"></i></button>`;
+  }
 
 
-  return `<div class='post' data-id='${_id}'>
+
+  return `<div class='post ${largeFontClass}' data-id='${_id}'>
     <div class='postActionContainer'>
       ${retweetText}
     </div>
@@ -179,6 +195,7 @@ function createPostHtml(postData) {
           <a class='displayName' href='/profile/${username}'>${displayName}</a>
           <span class='username'>@${username}</span>
           <span class='date'>${timestamp}</span>
+          ${buttons}
         </div>
         ${replyFlag}
         <div class='postBody'>
@@ -258,4 +275,20 @@ function outputPosts(results, container) {
   if (results.length === 0) {
     container.append("<span class='noResults'>Nothing to show.</span>")
   }
+}
+
+function outputPostsWithReplies(results, container) {
+  container.html("");
+  if (results.replyTo !== undefined && results.replyTo._id !== undefined) {
+    let html = createPostHtml(results.replyTo);
+    container.append(html);
+  }
+
+  let mainPostHtml = createPostHtml(results.postData, true);
+  container.append(mainPostHtml);
+
+  results.replies.forEach(reply => {
+    let html = createPostHtml(reply);
+    container.append(html);
+  });
 }

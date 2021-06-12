@@ -2,6 +2,10 @@ const express = require('express');
 const app = express();
 const router = express.Router();
 const bodyParser = require('body-parser');
+const multer = require('multer');
+const path = require("path");
+const fs = require("fs");
+const upload = multer({ dest: 'uploads/' });
 const User = require('../../schemas/UserSchema.js');
 const Post = require('../../schemas/PostSchema.js');
 
@@ -60,6 +64,29 @@ router.get('/:userId/followers', async (req, res, next) => {
     console.log("Oh no!: ", err)
     res.sendStatus(400);
   })
+
+});
+
+router.post("/profilePicture", upload.single("croppedImage"), async (req, res, next) => {
+    if (!req.file) {
+        console.log("No file uploaded with ajax request.");
+        return res.sendStatus(400);
+    }
+
+    let filePath = `/uploads/images/${req.file.filename}.png`;
+    let tempPath = req.file.path;
+    let targetPath = path.join(__dirname, `../../${filePath}`);
+
+    fs.rename(tempPath, targetPath, async err => {
+        if (err !== null) {
+          console.log(error);
+          return res.sendStatus(400);
+        }
+
+        // The flag new will ensure that findById returns the updated object rather than the pre-updated
+        req.session.user = await User.findByIdAndUpdate(req.session.user._id, { profilePic: filePath }, { new: true})
+        res.sendStatus(204);
+    })
 
 });
 

@@ -1,3 +1,8 @@
+// Global Bindings
+let cropper;
+
+
+
 $('#postTextarea, #replyTextarea').keyup(e => {
   let textbox = $(e.target);
   let value = textbox.val().trim();
@@ -83,6 +88,57 @@ $("#deletePostButton").click(() => {
   })
 
 })
+
+$("#filePhoto").change(event => {
+    let input = $(event.target)[0];
+
+    if (input.files && input.files[0]) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+            let image = document.getElementById("imagePreview");
+            image.src = e.target.result;
+
+
+            if (cropper !== undefined) {
+              cropper.destroy();
+            }
+
+            cropper = new Cropper(image, {
+              aspectRatio: 1 / 1,
+              // Prevents the grid background while cropping
+              background: false
+            });
+
+        }
+      reader.readAsDataURL(input.files[0]);
+    }
+})
+
+$("#imageUploadButton").click(() => {
+    let canvas = cropper.getCroppedCanvas();
+
+    if (canvas === null) {
+      alert("Could not upload image. Make sure it is an image file.");
+      return;
+    }
+
+    // Blob will help store large videos / photos (binary large object)
+    canvas.toBlob(blob => {
+      let formData = new FormData();
+      formData.append("croppedImage", blob);
+
+      $.ajax({
+        url: "/api/users/profilePicture",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: () => location.reload()
+      })
+
+    })
+
+});
 
 $(document).on('click', '.likeButton', (event) => {
   let button = $(event.target);

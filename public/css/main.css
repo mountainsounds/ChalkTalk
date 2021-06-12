@@ -395,3 +395,10 @@ button i, button span {
 .userImageContainer:hover .profilePictureButton {
   display: block;
 }
+
+#imagePreview {
+ width: 100%;
+ display:block;
+/* Cropper says this is important -- don't ignore! */
+ max-width: 100%;
+}

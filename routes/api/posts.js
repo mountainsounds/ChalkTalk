@@ -9,12 +9,34 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 router.get('/', async (req, res, next) => {
   let searchObj = req.query;
+  let sessionUser = req.session.user;
 
   if (searchObj.isReply !== undefined) {
     let isReply = searchObj.isReply === "true";
     // Mongodb exists operator to determine whether the search term exists
     searchObj.replyTo = { $exists: isReply };
     delete searchObj.isReply;
+  }
+
+  if (searchObj.followingOnly !== undefined) {
+    let followingOnly = searchObj.followingOnly === "true";
+
+    if (followingOnly) {
+      let objectIds = [];
+
+      if (!sessionUser.following) {
+        sessionUser.following = [];
+      }
+
+      sessionUser.following.forEach(user => {
+        objectIds.push(user);
+      })
+      // This line will show our own posts on the newsFeed line
+      objectIds.push(sessionUser._id);
+      searchObj.postedBy = { $in: objectIds };
+    }
+
+    delete searchObj.followingOnly;
   }
 
   let results = await getPosts(searchObj);

@@ -12,6 +12,8 @@ const UserSchema = new Schema({
   // Keep track of posts the user has liked
   likes: [{ type: Schema.Types.ObjectId, ref: 'Post'}],
   retweets: [{ type: Schema.Types.ObjectId, ref: 'Post'}],
+  following: [{ type: Schema.Types.ObjectId, ref: 'User'}],
+  followers: [{ type: Schema.Types.ObjectId, ref: 'User'}]
 // Set Options
 }, {
   // Give timestamp to each insertion

@@ -1,43 +1,57 @@
 extends layouts/main-layout.pug
 
 block content
-  if !profileUser
-    span.errorMessage Check the url you are trying to access.
-  else
-    script.
-      let profileUserId = '!{profileUser._id}'
-      let selectedTab = '!{selectedTab}';
+    if !profileUser
+        span.errorMessage Check the url you are trying to access.
+    else
+        script.
+          let profileUserId = '!{profileUser._id}'
+          let selectedTab = '!{selectedTab}';
 
-    .profileHeaderContainer
-      .coverPhotoContainer
+        - followersCount = profileUser.followers.length
+        - followingCount = profileUser.following.length
 
-        .userImageContainer
-          img(src=profileUser.profilePic, alt="User profile image")
-      .profileButtonsContainer
-        if profileUser._id !== userLoggedIn._id
-          a.profileButton(href=`/messages/${profileUser._id}`)
-            i.fas.fa-envelope
-          +createFollowButton(profileUser, false)
-      .userDetailsContainer
-        span.displayName #{profileUser.firstName} #{profileUser.lastName}
-        span.username @#{profileUser.username}
-        span.description #{profileUser.description}
+        .profileHeaderContainer
+            .coverPhotoContainer
 
-        .followersContainer
-          a(href=`/profile/${profileUser.username}/following`)
-            span.value #{0}
-            span Following
-          a(href=`/profile/${profileUser.username}/followers`)
-            span.value #{0}
-            span Followers
+                .userImageContainer
+                    img(src=profileUser.profilePic, alt="User profile image")
 
-    .tabsContainer
-      +createTab("Posts", `/profile/${profileUser.username}`, selectedTab !== "replies")
-      +createTab("Replies", `/profile/${profileUser.username}/replies`, selectedTab === "replies")
+                    if profileUser._id === userLoggedIn._id
+                        button.profilePictureButton(data-toggle="modal", data-target="")
+                            i.fas.fa-camera
 
-    .postsContainer
+            .profileButtonsContainer
+                if profileUser._id !== userLoggedIn._id
+                    a.profileButton(href=`/messages/${profileUser._id}`)
+                        i.fas.fa-envelope
 
-    +createPostModals(userLoggedIn)
+                    - let profileUserId = profileUser._id.toString();
+                    - if (userLoggedIn.following && userLoggedIn.following.includes(profileUserId))
+                        +createFollowButton(profileUser, true)
+                    - else
+                        +createFollowButton(profileUser, false)
+
+            .userDetailsContainer
+                span.displayName #{profileUser.firstName} #{profileUser.lastName}
+                span.username @#{profileUser.username}
+                span.description #{profileUser.description}
+
+                .followersContainer
+                    a(href=`/profile/${profileUser.username}/following`)
+                        span.value #{followingCount}
+                        span Following
+                    a(href=`/profile/${profileUser.username}/followers`)
+                        span#followersValue.value #{followersCount}
+                        span Followers
+
+        .tabsContainer
+            +createTab("Posts", `/profile/${profileUser.username}`, selectedTab !== "replies")
+            +createTab("Replies", `/profile/${profileUser.username}/replies`, selectedTab === "replies")
+
+        .postsContainer
+
+            +createPostModals(userLoggedIn)
 
 block scripts
   script(src='/js/profile.js')

@@ -18,6 +18,12 @@ router.get('/', async (req, res, next) => {
     delete searchObj.isReply;
   }
 
+  if (searchObj.search !== undefined) {
+    // This handles the specific searchBar filtering logic
+    searchObj.content = { $regex: searchObj.search, $options: "i"};
+    delete searchObj.search;
+  }
+
   if (searchObj.followingOnly !== undefined) {
     let followingOnly = searchObj.followingOnly === "true";
 
@@ -76,10 +82,6 @@ router.post('/', async (req, res, next) => {
   if (req.body.replyTo) {
     postData.replyTo = req.body.replyTo;
   }
-
-  console.log('req.body.replyTo', req.body.replyTo)
-  console.log('PostData on server: ', postData);
-
 
   Post.create(postData)
     .then(async newPost => {

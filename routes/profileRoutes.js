@@ -37,7 +37,7 @@ router.get('/:username/following', async (req, res, next) => {
 
 router.get('/:username/followers', async (req, res, next) => {
   let payload = await getPayload(req.params.username, req.session.user);
-  payload.selectedTab = "followers";
+  payload.selectedTab = "following";
   res.status(200).render("followersAndFollowing", payload);
 });
 

@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "scss": "node-sass --watch public/scss -o public/css"
   },
   "author": "Zack Sawyer",
   "license": "ISC",
@@ -17,6 +18,7 @@
     "mongodb": "^3.6.9",
     "mongoose": "^5.12.11",
     "multer": "^1.4.2",
+    "node-sass": "^6.0.0",
     "nodemon": "^2.0.7",
     "pug": "^3.0.2"
   }

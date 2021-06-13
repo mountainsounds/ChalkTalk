@@ -10,28 +10,33 @@
   --red: rgb(226, 34, 94);
   --redBackground: rgba(226, 34, 94, 0.1);
   --green: rgb(23, 191, 99);
-  --greenBackground: rgba(23, 191, 99, 0.1); }
+  --greenBackground: rgba(23, 191, 99, 0.1);
+}
 
 a {
-  color: inherit; }
+  color: inherit;
+}
 
 a:hover {
   color: inherit;
-  text-decoration: none; }
+  text-decoration: none;
+}
 
 h1 {
   font-size: 19px;
   font-weight: 800;
-  margin: 0; }
+  margin: 0;
+}
 
 nav {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  height: 100%; }
-  nav a.blue {
-    color: var(--blue); }
-  nav a {
+  height: 100%;
+
+  a.blue { color: var(--blue) }
+
+  a {
     display: flex;
     padding: 10px;
     font-size: 30px;
@@ -39,31 +44,41 @@ nav {
     height: 55px;
     align-items: center;
     justify-content: center;
-    color: #212529; }
-    nav a:hover {
+    color: #212529;
+
+    &:hover {
       background-color: var(--buttonHoverBg);
       color: var(--blue);
-      border-radius: 50%; }
+      border-radius: 50%;
+    }
+  }
+}
+
 
 .wrapper > .row {
-  margin: 0; }
+  margin: 0;
+}
 
 button {
   background-color: transparent;
   border: none;
-  color: var(--greyButtonText); }
-  button:focus {
-    outline: none; }
-  button i, button span {
+  color: var(--greyButtonText);
+
+  &:focus { outline: none}
+
+  i, span {
     /* This fixes a bug and allows the like count to rerender dynamiclaly */
-    pointer-events: none; }
+    pointer-events: none;
+  }
+}
 
 .mainSectionContainer {
   padding: 0;
   border-left: 1px solid var(--lightGrey);
   border-right: 1px solid var(--lightGrey);
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+}
 
 .titleContainer {
   height: 53px;
@@ -72,41 +87,51 @@ button {
   align-items: center;
   border-bottom: 1px solid var(--lightGrey);
   /* Handles bug in Safari */
-  flex-shrink: 0; }
-  .titleContainer h1 {
-    flex: 1; }
+  flex-shrink: 0;
+
+  h1 {flex: 1}
+}
 
 .postFormContainer {
   display: flex;
   padding: var(--spacing);
-  border-bottom: 10px solid #e6ecf0;
-  flex-shrink: 0; }
+  border-bottom: 10px solid rgb(230, 236, 240);
+
+  flex-shrink: 0;
+}
 
 .userImageContainer {
   width: 50px;
-  height: 50px; }
-  .userImageContainer img {
+  height: 50px;
+
+  img {
     width: 100%;
     border-radius: 50%;
-    background-color: white; }
+    background-color: white;
+  }
+}
 
 .textareaContainer {
   flex: 1;
-  padding-left: var(--spacing); }
-  .textareaContainer textarea {
+  padding-left: var(--spacing);
+
+  textarea {
     width: 100%;
     border: none;
     resize: none;
-    font-size: 19px; }
+    font-size: 19px;
+  }
+}
 
 #submitPostButton {
   background-color: var(--blue);
   color: white;
   border: none;
   border-radius: 40px;
-  padding: 7px 15px; }
-  #submitPostButton:disabled {
-    background-color: var(--blueLight); }
+  padding: 7px 15px;
+
+  &:disabled { background-color: var(--blueLight) }
+}
 
 /* Posts */
 .post {
@@ -115,96 +140,122 @@ button {
   padding: var(--spacing);
   cursor: pointer;
   border-bottom: 1px solid var(--lightGrey);
-  flex-shrink: 0; }
+  flex-shrink: 0;
+}
 
 .mainContentContainer {
   flex: 1;
-  display: flex; }
+  display: flex;
+}
 
 .postContentContainer {
   padding-left: var(--spacing);
   display: flex;
   flex-direction: column;
-  flex: 1; }
+  flex: 1;
+}
 
 .displayName {
-  font-weight: bold; }
+  font-weight: bold;
+}
 
 .username, .date {
-  color: var(--greyText); }
+  color: var(--greyText);
+}
 
-.postFooter {
+.postFooter{
   display: flex;
-  align-items: center; }
-  .postFooter .postButtonContainer {
+  align-items: center;
+
+  .postButtonContainer {
     flex: 1;
-    display: flex; }
-    .postFooter .postButtonContainer button {
-      padding: 2px 5px; }
+    display: flex;
+
+    button { padding: 2px 5px }
+  }
+}
 
 .header a:hover {
-  text-decoration: underline; }
+  text-decoration: underline;
+}
 
 .header a,
 .header span {
-  padding-right: 5px; }
+  padding-right: 5px;;
+}
 
 .postButtonContainer button:hover {
   background-color: #d4edff;
   color: var(--blue);
-  border-radius: 50%; }
+  border-radius: 50%;
+}
 
 .postButtonContainer.red button.active {
-  color: var(--red); }
+  color: var(--red);
+}
 
 .postButtonContainer.red button:hover {
   color: var(--red);
-  background-color: var(--redBackground); }
+  background-color: var(--redBackground);
+}
 
 .postButtonContainer.green button.active {
-  color: var(--green); }
+  color: var(--green);
+}
 
 .postButtonContainer.green button:hover {
   color: var(--green);
-  background-color: var(--greenBackground); }
+  background-color: var(--greenBackground);
+}
 
 .postActionContainer {
   padding-left: 35px;
   font-size: 13px;
   color: var(--greyText);
-  margin-bottom: var(--spacing); }
+  margin-bottom: var(--spacing);
+}
 
 .modal .postFormContainer {
   border: none;
   padding: 0;
-  padding-top: var(--spacing); }
+  padding-top: var(--spacing);
+}
 
 .modal .post {
-  padding-top: 0 0 var(--spacing) 0; }
+  padding-top: 0 0 var(--spacing) 0;
+}
 
 .replyFlag {
-  margin-bottom: 5px; }
+  margin-bottom: 5px;
+}
 
 .replyFlag a {
-  color: var(--blue); }
+  color: var(--blue);
+}
 
 .post.largeFont .postBody,
 .post.largeFont .postFooter {
-  font-size: 23px; }
+  font-size: 23px;
+}
 
 .postContentContainer .header {
-  display: flex; }
+  display: flex;
+}
 
 .postContentContainer .header .date {
-  flex: 1; }
+  flex: 1;
+}
 
 .errorMessage {
-  padding: var(--spacing); }
+  padding: var(--spacing);
+}
 
 .coverPhotoSection {
   height: 180px;
   background-color: var(--blue);
-  position: relative; }
+  position: relative;
+}
+
 
 .profileHeaderContainer .userImageContainer {
   height: 132px;
@@ -212,17 +263,21 @@ button {
   margin-left: var(--spacing);
   position: absolute;
   bottom: -66px;
+
   display: flex;
   align-items: center;
-  justify-content: center; }
+  justify-content: center;
+}
 
 .profileHeaderContainer .userImageContainer img {
-  border: 2px solid #fff; }
+  border: 2px solid #fff;
+}
 
 .profileHeaderContainer .profileButtonsContainer {
   text-align: right;
   padding: var(--spacing);
-  min-height: 66px; }
+  min-height: 66px;
+}
 
 .profileButton,
 .followButton {
@@ -232,39 +287,48 @@ button {
   padding: 5px 15px;
   border-radius: 60px;
   display: inline-block;
-  margin-left: var(--spacing); }
+  margin-left: var(--spacing);
+}
 
 .profileButton:hover
 .followButton:hover {
-  background-color: var(--blueBackground); }
+  background-color: var(--blueBackground);
+}
 
 .followButton.following {
   background-color: var(--blue);
-  color: #fff; }
+  color: #fff;
+}
 
 .profileHeaderContainer .userDetailsContainer {
   display: flex;
   flex-direction: column;
-  padding: 0 var(--spacing); }
+  padding: 0 var(--spacing);
+}
 
-.followersContainer .value {
+.followersContainer .value{
   font-weight: bold;
-  margin-right: 5px; }
+  margin-right: 5px;
+}
 
-.followersContainer span:not(.value) {
-  color: var(--greyText); }
+.followersContainer span:not(.value){
+ color: var(--greyText);
+}
 
 .followersContainer a {
-  margin-right: 15px; }
+  margin-right: 15px;
+}
 
 .followersContainer a:hover {
   margin-right: 15px;
-  border-bottom: 1px solid #000; }
+  border-bottom: 1px solid #000;
+}
 
 .tabsContainer {
   display: flex;
   border-bottom: 1px solid var(--lightGrey);
-  flex-shrink: 0; }
+  flex-shrink: 0;
+}
 
 .tab {
   flex: 1;
@@ -273,85 +337,108 @@ button {
   justify-content: center;
   align-items: center;
   color: var(--greyText);
-  font-weight: bold; }
+  font-weight: bold;
+}
 
 .tab.active {
   color: var(--blue);
-  border-bottom: 2px solid var(--blue); }
+  border-bottom: 2px solid var(--blue);
+}
 
 .tab:hover {
   color: var(--blue);
-  background-color: var(--blueBackground); }
+  background-color: var(--blueBackground);
+}
 
 .noResults {
-  padding: var(--spacing); }
+  padding: var(--spacing);
+}
 
 .resultsContainer {
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+}
 
 .resultsContainer .user {
   padding: var(--spacing);
   display: flex;
-  border-bottom: 1px solid var(--lightGrey); }
+  border-bottom: 1px solid var(--lightGrey);
+}
 
 .user .userDetailsContainer {
   flex: 1;
-  padding: 0 var(--spacing); }
+  padding: 0 var(--spacing);
+}
 
 .profilePictureButton,
 .coverPhotoButton {
   position: absolute;
   font-size: 50px;
-  color: rgba(0, 0, 0, 0.6);
-  display: none; }
+  color: rgba(0,0,0,0.6);
+  display: none;
+}
 
 .userImageContainer:hover .profilePictureButton,
-.coverPhotoSection:hover .coverPhotoButton {
-  display: block; }
+.coverPhotoSection:hover .coverPhotoButton  {
+  display: block;
+}
 
 .coverPhotoContainer {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%; }
-  .coverPhotoContainer img {
+  height: 100%;
+
+  & img {
     width: 100%;
     height: 100%;
-    object-fit: cover; }
+    object-fit: cover;
+  }
+}
 
 #imagePreview,
 #coverPreview {
-  width: 100%;
-  display: block;
-  /* Cropper says this is important -- don't ignore! */
-  max-width: 100%; }
+ width: 100%;
+ display:block;
+/* Cropper says this is important -- don't ignore! */
+ max-width: 100%;
+}
 
 .pinButton.active {
-  color: var(--blue); }
+  color: var(--blue);
+}
 
 .pinnedPostText {
   font-size: 12px;
-  color: var(--greyText); }
+  color: var(--greyText);
+}
 
 .pinnedPostContainer {
-  border-bottom: 10px solid var(--blueBackground); }
+  border-bottom: 10px solid var(--blueBackground)
+}
 
 .searchBarContainer {
   position: relative;
   color: var(--greyText);
-  padding: 10px var(--spacing); }
-  .searchBarContainer i {
+  padding: 10px var(--spacing);
+
+  & i {
     position: absolute;
     top: 20px;
-    left: 28px; }
-  .searchBarContainer #searchBox {
+    left: 28px;
+  }
+
+  & #searchBox {
     height: 36px;
     width: 100%;
     padding: 5px 15px 5px 40px;
     border-radius: 50px;
     background-color: var(--lightGrey);
     border: none;
-    color: var(--greyText); }
-    .searchBarContainer #searchBox:focus {
-      outline: none; }
+    color: var(--greyText);
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

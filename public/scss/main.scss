@@ -442,3 +442,53 @@ button {
     }
   }
 }
+
+.chatPageContainer {
+    display: flex;
+    flex-direction: column;
+    // Possible Safari Bug
+    min-height: 0;
+}
+
+.chatTitleBar {
+    border-bottom: 1px solid var(--lightGrey);
+    display: flex;
+    align-items: center;
+    // THis allows title bar to grow its height as more users are entered
+    min-height: 60px;
+    padding: 10px;
+    label { margin: 0 10px 0 0 }
+}
+
+#userSearchTextbox {
+  border: none;
+  flex: 1;
+  font-weight: 200;
+  min-width: 350px;
+  &:focus {outline: none};
+}
+
+#createChatButton {
+  border: none;
+  background-color: var(--blue);
+  color: #fff;
+  padding: 7px 20px;
+  margin: 10px auto;
+  border-radius: 40px;
+
+  &:disabled {
+    background-color: var(--lightGrey);
+    color: var(--greyText);
+  }
+}
+
+.selectedUser {
+  font-weight: 300;
+  background-color: #CBE5FE;
+  color: #0084ff;
+  padding: 5px;
+  border-radius: 3px;
+  margin: 5px 5px 0 0;
+  display: inline-block;
+}
+

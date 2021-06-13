@@ -1,5 +1,3 @@
-let timer;
-
 $("#searchBox").keydown((e) => {
   clearTimeout(timer);
 
@@ -17,8 +15,6 @@ $("#searchBox").keydown((e) => {
 
     }
   }, 500)
-
-  console.log('searchType: ', searchType);
 });
 
 function search(searchTerm, searchType = "posts") {

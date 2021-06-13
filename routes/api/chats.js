@@ -40,6 +40,7 @@ router.get('/', async (req, res, next) => {
 
     Chat.find({ users: { $elemMatch: { $eq: req.session.user._id } }})
     .populate("users")
+    .sort({ updatedAt: -1 })
     .then(results => res.status(200).send(results))
     .catch(err => {
       console.log("Oh no!: ", err);

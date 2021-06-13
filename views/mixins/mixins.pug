@@ -119,3 +119,28 @@ mixin createUnpinPostModal()
         .modal-footer
           button.btn.btn-secondary(type='button' data-dismiss='modal') Cancel
           button#unpinPostButton.btn.btn-primary(type='button') Unpin
+
+mixin createChatImage(chatData, userLoggedIn)
+    if(!chatData)
+        return
+
+    - let i = 0
+    - let maxImagesToShow = 3
+    - let remainingUsers = chatData.users.length - maxImagesToShow
+    - remainingUsers -= 1 //- remove 1 since we won't show our own image
+
+    .chatImagesContainer
+        if remainingUsers > 0
+            .userCount
+                span +#{remainingUsers}
+
+        each user in chatData.users
+            //- if we are not the only user, don't show our photo
+            if chatData.users.length !== 1 && user._id === userLoggedIn._id
+                - continue
+            //- one we have rendered more than 3 images, stop rendering
+            else if i >= maxImagesToShow
+                - break
+
+            img(src=user.profilePic, alt="User's profile picture", title=user.firstName)
+            - i += 1

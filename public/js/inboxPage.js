@@ -34,24 +34,6 @@ function createChatHtml(chatData) {
             </a>`;
 }
 
-function getChatName(chatData) {
-    let chatName = chatData.chatName;
-
-    if (!chatName) {
-        let otherChatUsers = getOtherChatUsers(chatData.users);
-        let namesArray = otherChatUsers.map(user => user.firstName + " " + user.lastName);
-        chatName = namesArray.join(", ")
-    }
-
-    return chatName;
-}
-
-function getOtherChatUsers(users) {
-  if (users.length === 1) return users;
-
-  return users.filter(user => user._id !== userLoggedIn._id);
-}
-
 function getChatImageElements(chatData) {
   let otherChatUsers = getOtherChatUsers(chatData.users);
 

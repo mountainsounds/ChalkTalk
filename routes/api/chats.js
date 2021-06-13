@@ -48,6 +48,27 @@ router.get('/', async (req, res, next) => {
     })
 });
 
+router.get('/:chatId', async (req, res, next) => {
+
+  Chat.findOne({ _id: req.params.chatId, users: { $elemMatch: { $eq: req.session.user._id } }})
+  .populate("users")
+  .then(results => res.status(200).send(results))
+  .catch(err => {
+    console.log("Oh no!: ", err);
+    res.sendStatus(400);
+  })
+});
+
+router.put('/:chatId', async (req, res, next) => {
+
+  Chat.findByIdAndUpdate(req.params.chatId, req.body)
+  .then(results => res.sendStatus(204))
+  .catch(err => {
+    console.log("Oh no!: ", err);
+    res.sendStatus(400);
+  })
+});
+
 
 module.exports = router;
 

@@ -527,3 +527,9 @@ button {
     border: 2px solid #fff; }
   .chatImagesContainer img:not(:last-child) {
     margin-left: -10px; }
+
+#chatNameTextbox {
+  width: 100%;
+  border-radius: 3px;
+  border: none;
+  cursor: text; }

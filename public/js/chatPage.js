@@ -1,6 +1,6 @@
 $(document).ready(() => {
-  $.get(`/api/chats/${chatId}`, (data) => $("#chatName").text(getChatName(data)));
-})
+    $.get(`/api/chats/${chatId}`, (data) => $("#chatName").text(getChatName(data)));
+});
 
 $("#chatNameButton").click(() => {
     let name = $("#chatNameTextbox").val().trim();
@@ -16,4 +16,32 @@ $("#chatNameButton").click(() => {
         }
       }
     })
-})
+});
+
+$(".sendMessageButton").click(() => {
+    messageSubmitted();
+});
+
+$(".inputTextbox").keydown((event) => {
+  if (event.which === 13 && !event.shiftKey) {
+      messageSubmitted();
+      // Prevent the regular new line operation
+      return false;
+  }
+
+});
+
+function messageSubmitted() {
+    let content = $(".inputTextbox").val().trim();
+
+    if (content !== "") {
+      sendMessage(content)
+    }
+    $(".inputTextbox").val("");
+}
+
+function sendMessage(content) {
+  $.post("/api/messages", { content: content, chatId }, (newMessage, status, xhr) => {
+      console.log('newMessage: ', newMessage);
+  });
+}

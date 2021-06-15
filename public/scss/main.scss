@@ -20,6 +20,10 @@ html, body {
   font-weight: 300;
 }
 
+ul {
+  margin: 0;
+}
+
 * {
   outline: none;
 }
@@ -56,6 +60,7 @@ nav {
     align-items: center;
     justify-content: center;
     color: #212529;
+    position: relative;
 
     &:hover {
       background-color: var(--buttonHoverBg);
@@ -163,6 +168,7 @@ button {
 .mainContentContainer {
   flex: 1;
   display: flex;
+  overflow-y: hidden;
 }
 
 .postContentContainer {
@@ -460,12 +466,15 @@ button {
   }
 }
 
+
 .chatPageContainer {
     display: flex;
     flex-direction: column;
     flex: 1;
     // Possible Safari Bug
     min-height: 0;
+    // Just scroll the container, not the page
+    flex-basis: 0;
 }
 
 .chatTitleBar {
@@ -591,7 +600,7 @@ button {
   }
 }
 
-.chatPageContainer {
+.chatContainer {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -626,6 +635,22 @@ button {
   overflow-y: auto;
   flex-direction: column;
   padding: var(--spacing);
+
+  .imageContainer {
+    height: 24px;
+    width: 24px;
+    margin-right: 7px;
+  }
+
+  img {
+    height: 100%;
+    border-radius: 50%;
+    vertical-align: bottom;
+  }
+
+  .message.last {
+    margin-bottom: 7px;
+  }
 }
 
 .chatImagesContainer {
@@ -663,6 +688,166 @@ button {
   border-radius: 3px;
   border: none;
   cursor: text;
+}
+
+.chatMessages .message {
+  padding-bottom: 2px;
+  list-style: none;
+  display: flex;
+  // This will push messages down to bottom of container w/profile pohto
+  align-items: flex-end;
+  // Safari Issues
+  flex-shrink: 0;
+
+  .messageContainer {
+    display: flex;
+    flex-direction: column;
+    max-width: 55%;
+  }
+}
+
+.typingDots img,
+.chatMessages .message .messageBody {
+  background-color: #f1f0f0;
+  padding: 6px 12px;
+  border-radius: 18px;
+  font-size: 14px;
+}
+
+.typingDots {
+  padding: var(--spacing);
+  padding-bottom: 0;
+  display: none;
+
+  img {
+    height: 35px;
+  }
+}
+
+// OUR MESSAGES
+.chatMessages {
+
+  .message.mine {
+    flex-direction: row-reverse;
+
+    .messageContainer {
+      align-items: flex-end;
+    }
+
+    .messageBody {
+      background-color: var(--blue);
+      color: #fff;
+    }
+  }
+
+  // Message Curves
+  .message.mine.first .messageBody {
+    border-bottom-right-radius: 2px;
+  }
+
+  .message.mine:not(.first):not(.last) .messageBody {
+    border-bottom-right-radius: 2px;
+    border-top-right-radius: 2px;
+  }
+
+  .message.mine.last .messageBody {
+    border-bottom-right-radius: 18px;
+  }
+
+  .message.mine.last:not(.first):not(.first) .messageBody {
+    border-top-right-radius: 2px;
+  }
+
+}
+
+
+// THEIR MESSAGES
+.chatMessages {
+
+  .message.theirs .messageContainer {
+    align-items: flex-start;
+  }
+
+  .message.theirs.first .messageBody {
+    border-bottom-left-radius: 2px;
+  }
+
+  .message.theirs:not(.first):not(.last) .messageBody {
+    border-bottom-left-radius: 2px;
+    border-top-left-radius: 2px;
+  }
+
+  .message.theirs.last .messageBody {
+    border-bottom-left-radius: 18px;
+  }
+
+  .message.theirs.last:not(.first):not(.first) .messageBody {
+    border-top-left-radius: 2px;
+  }
+}
+
+
+.senderName {
+  color: rgba(0, 0, 0, .4);
+}
+
+.loadingSpinnerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.loadingSpinnerContainer img {
+  width: 50%;
+  max-width: 75px;
+}
+
+.resultListItem.active {
+    background-color: var(--blueBackground);
+}
+
+// This fixes a bug where clicking on the container in the notification list, rather than the image, will not take you to the notification
+
+.resultListItem.notification * {
+    pointer-events: none;
+}
+
+#notificationsBadge,
+#messagesBadge {
+    background-color: var(--red);
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: white;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+}
+
+#notificationsBadge.active,
+#messagesBadge.active {
+  visibility: visible;
+}
+
+#notificationList {
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  width: 350px;
+  background-color: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+
+  .active {
+    background-color: white;
+  }
 }
 
 

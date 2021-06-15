@@ -18,7 +18,7 @@ const UserSchema = new Schema({
 // Set Options
 }, {
   // Give timestamp to each insertion
-  timestamps: true
+  timestamps: true,
 });
 
 let User = mongoose.model('User', UserSchema);

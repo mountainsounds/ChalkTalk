@@ -20,16 +20,24 @@ html(lang="en")
         nav.col-2
           a.blue(href="/")
             i.fas.fa-mountain
+
           a(href="/")
             i.fas.fa-campground
+
           a(href="/search")
             i.fas.fa-search
+
           a(href="/notifications")
             i.fas.fa-bell
+            span#notificationsBadge
+
           a(href="/messages")
             i.fas.fa-envelope
+            span#messagesBadge
+
           a(href="/profile")
             i.fas.fa-user
+
           a(href="/logout")
             i.fas.fa-sign-out-alt
 
@@ -41,6 +49,7 @@ html(lang="en")
           block content
 
         .d-none.d-md-block.col-md-2.col-lg-4
+    #notificationList
 
 
 
@@ -56,6 +65,9 @@ html(lang="en")
 
     script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', crossorigin='anonymous')
 
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js')
+
     block scripts
 
     script(src="/js/common.js")
+    script(src="/js/clientSocket.js")

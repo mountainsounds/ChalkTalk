@@ -22,7 +22,7 @@ function outputChatList(chatList, container) {
 function createChatHtml(chatData) {
     let chatName =getChatName(chatData);
     let image = getChatImageElements(chatData);
-    let latestMessage = "This is the latest message";
+    let latestMessage = getLatestMessage(chatData.latestMessage);
 
     return `<a class='resultListItem' href='/messages/${chatData._id}'>
                 ${image}
@@ -33,6 +33,7 @@ function createChatHtml(chatData) {
                 </div>
             </a>`;
 }
+
 
 function getChatImageElements(chatData) {
   let otherChatUsers = getOtherChatUsers(chatData.users);
@@ -56,4 +57,13 @@ function getUserChatImageElement(user) {
   }
 
   return `<img src='${user.profilePic}' alt='User's profile pic'>`;
+}
+
+function getLatestMessage(latestMessage) {
+    if (latestMessage !== null && latestMessage !== undefined) {
+        let sender = latestMessage.sender;
+        return `${sender.firstName} ${sender.lastName}: ${latestMessage.content}`;
+    }
+
+    return "New chat";
 }

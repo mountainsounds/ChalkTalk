@@ -38,12 +38,17 @@ router.post('/', async (req, res, next) => {
 });
 
 router.get('/', async (req, res, next) => {
+    let {_id: userId} = req.session.user;
 
-    Chat.find({ users: { $elemMatch: { $eq: req.session.user._id } }})
+    Chat.find({ users: { $elemMatch: { $eq: userId } }})
     .populate("users")
     .populate("latestMessage")
     .sort({ updatedAt: -1 })
     .then(async (results) => {
+      if (req.query.unreadOnly !== undefined && req.query.unreadOnly === 'true') {
+        results = results.filter(({latestMessage}) => latestMessage && !latestMessage.readBy.includes(userId))
+      }
+
       results = await User.populate(results, { path: 'latestMessage.sender' });
       res.status(200).send(results);
     })
@@ -84,6 +89,17 @@ router.get('/:chatId/messages', async (req, res, next) => {
     res.sendStatus(400);
   })
 });
+
+router.put('/:chatId/messages/markAsRead', async (req, res, next) => {
+
+  Message.updateMany({ chat: req.params.chatId }, { $addToSet: { readBy: req.session.user._id } })
+  .then(results => res.sendStatus(204))
+  .catch(err => {
+    console.log("Oh no!: ", err);
+    res.sendStatus(400);
+  })
+});
+
 
 
 

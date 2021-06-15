@@ -87,6 +87,7 @@ io.on("connection", client => {
     client.on("join room", room => client.join(room));
     client.on("typing", room => client.in(room).emit("typing"));
     client.on("stop typing", room => client.in(room).emit("stop typing"));
+    client.on("notification received", room => client.in(room).emit("notification received"));
 
     // New message notification to people in group chat
     client.on("new message", newMessage => {

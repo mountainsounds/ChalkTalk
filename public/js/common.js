@@ -2,6 +2,7 @@
 let cropper;
 let timer;
 let selectedUsers = [];
+// let cropping = false;
 
 $(document).ready(() => {
     refreshMessagesBadge();
@@ -170,28 +171,36 @@ $("#filePhoto").change(event => {
     }
 });
 
+
+// $("#coverPhoto").on('hide.bs.modal', (e) => {
+//   console.log("Fired!!: ", cropping);
+//   if (cropping) return false
+// });
+
 $("#coverPhoto").change(event => {
   let input = $(event.target)[0];
-
   if (input.files && input.files[0]) {
-      let reader = new FileReader();
-      reader.onload = (e) => {
-          let image = document.getElementById("coverPreview");
-          image.src = e.target.result;
+      if (input.files[0].size > 1000000) {
+          alert(`file is larger than 1 mb, please choose a smaller one.`)
+      } else {
+          let reader = new FileReader();
+          reader.onload = (e) => {
+              let image = document.getElementById("coverPreview");
+              image.src = e.target.result;
 
+              if (cropper !== undefined) {
+                  cropper.destroy();
+              }
 
-          if (cropper !== undefined) {
-            cropper.destroy();
+              cropper = new Cropper(image, {
+                  aspectRatio: 16 / 9,
+                  // Prevents the grid background while cropping
+                  background: false
+            });
           }
 
-          cropper = new Cropper(image, {
-            aspectRatio: 16 / 9,
-            // Prevents the grid background while cropping
-            background: false
-          });
-
+          reader.readAsDataURL(input.files[0]);
       }
-    reader.readAsDataURL(input.files[0]);
   }
 });
 
@@ -240,8 +249,9 @@ $("#coverPhotoButton").click(() => {
       data: formData,
       processData: false,
       contentType: false,
-      success: () => location.reload()
-    })
+      success: () => location.reload(),
+      error: (err) => console.log('Err: ', err),
+    });
 
   })
 

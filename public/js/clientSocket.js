@@ -1,6 +1,7 @@
 let connected = false;
+let path = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
 
-let socket = io("http://localhost:3000");
+let socket = io(path);
 socket.emit("setup", userLoggedIn);
 
 socket.on("connected", () => connected = true);

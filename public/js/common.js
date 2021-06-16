@@ -689,11 +689,12 @@ return users.filter(user => user._id !== userLoggedIn._id);
 }
 
 function messageReceived(newMessage) {
-  if ($(`[data-room"=${newMessage.chat._id}"]`).length === 0) {
+  if ($(`[data-room="${newMessage.chat._id}"]`).length === 0) {
     // Show popup notification (not currently on message page)
       showMessagePopup(newMessage)
   } else {
       addChatMessageHtml(newMessage);
+      markAllMessagesAsRead();
   }
   // Update badge after new messages are sent.
   refreshMessagesBadge();

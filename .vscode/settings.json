@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/ed865a91-169e-48ec-ae5c-cccfca11b609/resourceGroups/appsvc_linux_centralus_basic/providers/Microsoft.Web/sites/ChalkTalk",
+  "appService.deploySubpath": "."
+}

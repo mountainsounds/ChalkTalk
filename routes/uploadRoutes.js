@@ -7,7 +7,6 @@ const path = require("path");
 const User = require('../schemas/UserSchema.js');
 
 router.get('/images/:path', (req, res, next) => {
-    console.log("Path: ", path.join(__dirname, '../uploads/images/' + req.params.path))
     res.sendFile(path.join(__dirname, '../uploads/images/' + req.params.path));
 });
 

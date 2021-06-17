@@ -1,13 +1,14 @@
 $(document).ready(() => {
 
   if (selectedTab === "followers") {
-    loadFollowers()
+    loadFollowers();
   } else {
     loadFollowing();
   }
 });
 
 function loadFollowers() {
+
   $.get(`/api/users/${profileUserId}/followers`, results => {
     outputUsers(results.followers, $(".resultsContainer"));
   })

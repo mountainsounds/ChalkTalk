@@ -52,7 +52,7 @@ mixin createFollowButton(user, isFollowing)
   button(class=buttonClass, data-user=user._id) #{text}
 
 mixin createTab(name, href, isSelected)
-  -className = isSelected ? "tab active" : "tab"
+  - className = isSelected ? "tab active" : "tab"
   a(href=href, class=className)
     span #{name}
 

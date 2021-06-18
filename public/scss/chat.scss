@@ -1,0 +1,336 @@
+
+.chatPageContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  // Possible Safari Bug
+  min-height: 0;
+  // Just scroll the container, not the page
+  flex-basis: 0;
+}
+
+.chatTitleBar {
+  border-bottom: 1px solid var(--lightGrey);
+  display: flex;
+  align-items: center;
+  // THis allows title bar to grow its height as more users are entered
+  min-height: 60px;
+  padding: 10px;
+  label { margin: 0 10px 0 0 }
+}
+
+#userSearchTextbox {
+border: none;
+flex: 1;
+font-weight: 200;
+min-width: 350px;
+&:focus {outline: none};
+}
+
+#createChatButton {
+border: none;
+background-color: var(--blue);
+color: #fff;
+padding: 7px 20px;
+margin: 10px auto;
+border-radius: 40px;
+
+&:disabled {
+  background-color: var(--lightGrey);
+  color: var(--greyText);
+}
+}
+
+.selectedUser {
+font-weight: 300;
+background-color: #CBE5FE;
+color: #0084ff;
+padding: 5px;
+border-radius: 3px;
+margin: 5px 5px 0 0;
+display: inline-block;
+}
+
+.resultListItem {
+padding: 7px;
+display: flex;
+align-items: center;
+flex-shrink: 0;
+border-bottom: 1px solid var(--lightGrey);
+
+&:hover {
+  background-color: #f2f2f2;
+}
+}
+
+.resultsDetailsContainer {
+display: flex;
+flex-direction: column;
+flex: 1;
+
+.heading {
+  font-weight: 500;
+}
+
+.subText {
+  color: var(--greyText);
+  font-size: 14px;
+}
+}
+
+.resultListItem img {
+height: 100%;
+width: 100%;
+border-radius: 50%;
+}
+
+.resultsImageContainer {
+height: 40px;
+width: 40px;
+position: relative;
+margin-right: 10px;
+display: flex;
+align-items: center;
+padding: 5px;
+}
+
+.groupChatImage img {
+height: 65%;
+width: 65%;
+position: absolute;
+bottom: 0;
+margin: 0;
+border: 2px solid #fff;
+
+&:first-of-type {
+  top:0;
+  right: 0;
+}
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chatTitleBarContainer {
+border-bottom: 1px solid var(--lightGrey);
+display: flex;
+align-items: center;
+padding: var(--spacing);
+}
+
+#chatName {
+width: 100%;
+border: 1px solid transparent;
+padding: 0 5px;
+
+&:hover {
+  border: 1px solid var(--lightGrey);
+  cursor: text;
+}
+}
+
+.chatContainer {
+flex: 1;
+display: flex;
+flex-direction: column;
+overflow-y: hidden;
+
+.footer {
+  display: flex;
+  padding: var(--spacing);
+  flex-shrink: 0px;
+
+  textarea {
+    flex: 1;
+    resize: none;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 18px;
+    border: none;
+    padding: 8px 15px;
+    height: 38px;
+  };
+
+  button {
+    background-color: transparent;
+    color: var(--blue);
+    font-size: 24px;
+  };
+};
+}
+
+.chatMessages {
+flex: 1;
+display: flex;
+overflow-y: auto;
+flex-direction: column;
+padding: var(--spacing);
+
+.imageContainer {
+  height: 24px;
+  width: 24px;
+  margin-right: 7px;
+}
+
+img {
+  height: 100%;
+  border-radius: 50%;
+  vertical-align: bottom;
+}
+
+.message.last {
+  margin-bottom: 7px;
+}
+}
+
+.chatImagesContainer {
+display: flex;
+flex-direction: row-reverse;
+height: 100%;
+margin-right: 10px;
+
+img {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #fff;
+  border-radius: 50px;
+}
+
+.userCount {
+  height: 40px;
+  width: 40px;
+  background-color: #f1f1f1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  border: 2px solid #fff;
+}
+
+& img:not(:last-child) {
+  margin-left: -10px;
+}
+}
+
+#chatNameTextbox {
+width: 100%;
+border-radius: 3px;
+border: none;
+cursor: text;
+}
+
+.chatMessages .message {
+padding-bottom: 2px;
+list-style: none;
+display: flex;
+// This will push messages down to bottom of container w/profile pohto
+align-items: flex-end;
+// Safari Issues
+flex-shrink: 0;
+
+.messageContainer {
+  display: flex;
+  flex-direction: column;
+  max-width: 55%;
+}
+}
+
+.typingDots img,
+.chatMessages .message .messageBody {
+background-color: #f1f0f0;
+padding: 6px 12px;
+border-radius: 18px;
+font-size: 14px;
+}
+
+.typingDots {
+padding: var(--spacing);
+padding-bottom: 0;
+display: none;
+
+img {
+  height: 35px;
+}
+}
+
+// OUR MESSAGES
+.chatMessages {
+
+.message.mine {
+  flex-direction: row-reverse;
+
+  .messageContainer {
+    align-items: flex-end;
+  }
+
+  .messageBody {
+    background-color: var(--blue);
+    color: #fff;
+  }
+}
+
+// Message Curves
+.message.mine.first .messageBody {
+  border-bottom-right-radius: 2px;
+}
+
+.message.mine:not(.first):not(.last) .messageBody {
+  border-bottom-right-radius: 2px;
+  border-top-right-radius: 2px;
+}
+
+.message.mine.last .messageBody {
+  border-bottom-right-radius: 18px;
+}
+
+.message.mine.last:not(.first):not(.first) .messageBody {
+  border-top-right-radius: 2px;
+}
+
+}
+
+
+// THEIR MESSAGES
+.chatMessages {
+
+.message.theirs .messageContainer {
+  align-items: flex-start;
+}
+
+.message.theirs.first .messageBody {
+  border-bottom-left-radius: 2px;
+}
+
+.message.theirs:not(.first):not(.last) .messageBody {
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+
+.message.theirs.last .messageBody {
+  border-bottom-left-radius: 18px;
+}
+
+.message.theirs.last:not(.first):not(.first) .messageBody {
+  border-top-left-radius: 2px;
+}
+}
+
+
+.senderName {
+color: rgba(0, 0, 0, .4);
+}
+
+.loadingSpinnerContainer {
+display: flex;
+align-items: center;
+justify-content: center;
+width: 100%;
+}
+
+.loadingSpinnerContainer img {
+width: 50%;
+max-width: 75px;
+}

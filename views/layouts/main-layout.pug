@@ -17,29 +17,40 @@ html(lang="en")
 
     .wrapper
       .row
-        nav.col-2
-          a.blue(href="/")
-            i.fas.fa-mountain
+        nav.col-2.navCol
+          .navContainer
 
-          a(href="/")
-            i.fas.fa-campground
+            a.navIcon.blue(href="/")
+              span#hope
+                i.fas.fa-mountain
+                p#content(data-content='Home')
 
-          a(href="/search")
-            i.fas.fa-search
+            a.navIcon(href="/search")
+              span#hope
+                i.fas.fa-search
+                p#content(data-content='Search')
 
-          a(href="/notifications")
-            i.fas.fa-bell
-            span#notificationsBadge
+            a.navIcon(href="/notifications")
+              span#hope
+                i.fas.fa-bell
+                p#content(data-content='Notifications')
+                span#notificationsBadge
 
-          a(href="/messages")
-            i.fas.fa-envelope
-            span#messagesBadge
+            a.navIcon(href="/messages")
+              span#hope
+                i.fas.fa-envelope
+                p#content(data-content='Messages')
+                span#messagesBadge
 
-          a(href="/profile")
-            i.fas.fa-user
+            a.navIcon(href="/profile")
+              span#hope
+                i.fas.fa-user
+                p#content(data-content='Profile')
 
-          a(href="/logout")
-            i.fas.fa-sign-out-alt
+            a.navIcon(href="/logout")
+              span#hope
+                i.fas.fa-sign-out-alt
+                p#content(data-content='Logout')
 
         .mainSectionContainer.col-10.col-md-8.col-lg-6
           .titleContainer
@@ -48,7 +59,7 @@ html(lang="en")
 
           block content
 
-        .d-none.d-md-block.col-md-2.col-lg-4
+        .rightSide.d-none.d-md-block.col-md-2.col-lg-4
     #notificationList
 
 

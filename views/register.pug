@@ -7,12 +7,12 @@ block content
 
       p.errorMessage #{errorMessage}
 
-      input(type="text", name="firstName", placeholder="First Name", value=firstName required="")
-      input(type="text", name="lastName", placeholder="Last Name", value=lastName required="")
-      input(type="text", name="username", placeholder="Username", value=username required="")
-      input(type="email", name="email", placeholder="Email", value=email required="")
-      input#password(type="password", name="password", placeholder="Password", required="")
-      input#passwordConf(type="password", name="passwordConf", placeholder="Confirm password", required="")
+      input(type="text", name="firstName", placeholder="First Name", value=firstName required="" autocomplete='given-name')
+      input(type="text", name="lastName", placeholder="Last Name", value=lastName required="" autocomplete='family-name')
+      input(type="text", name="username", placeholder="Username", value=username required="" autocomplete = 'username')
+      input(type="email", name="email", placeholder="Email", value=email required="" autocomplete='email')
+      input#password(type="password", name="password", placeholder="Password", required="" autocomplete='new-password')
+      input#passwordConf(type="password", name="passwordConf", placeholder="Confirm password", required="" autocomplete='new-password')
       input(type="submit", value="Register")
 
     a(href="/login") Already have an account? Login here.

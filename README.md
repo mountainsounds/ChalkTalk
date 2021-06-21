@@ -12,5 +12,3 @@ Primary Features include:
 ## Getting started
 Please look over the code or even better, create a free account @ 'https://chalktalk.azurewebsites.net/login'
 
-## Screenshots displaying main site functionality
-- 

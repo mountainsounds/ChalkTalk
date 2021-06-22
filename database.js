@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const MONGO_KEY = require('./config.js');
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useFindAndModify', false);
@@ -14,7 +15,7 @@ class Database {
   }
 
   connect() {
-    mongoose.connect("mongodb+srv://admin:-vbGzD3Vz6W5423@chalktalkcluster.0mmvw.mongodb.net/ChalkTalkDB?retryWrites=true&w=majority")
+    mongoose.connect(MONGO_KEY.MONGO_KEY)
       .then(() => {
         console.log('database connection successful!');
       })
@@ -24,7 +25,7 @@ class Database {
   }
 }
 
-module.expoprts = new Database();
+module.exports = new Database();
 
 
 

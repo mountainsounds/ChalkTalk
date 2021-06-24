@@ -9,7 +9,7 @@ Primary Features include:
 - Notifications
 - Individual and group real-time chat functionality utilizing Socket.io.
 
-Here is a quick video to walk you through the app's core functionality: https://www.youtube.com/watch?v=0V6M4i6UrO0&ab_channel=MountainSounds
+Here is a quick video to walk you through the app's core functionality: (https://www.youtube.com/watch?v=0V6M4i6UrO0&ab_channel=MountainSounds)
 
 ## Getting started
 Please look over the code or create a free account @ 'https://chalktalk.azurewebsites.net/login'

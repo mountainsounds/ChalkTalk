@@ -1,6 +1,6 @@
 # ChalkTalk
 
-** Not currently deployed ** See video for demo
+**Not currently deployed** See video for demo
 
 ChalkTalk is a social networking web application geared towards climbers.
 Primary Features include:
